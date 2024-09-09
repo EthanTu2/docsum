@@ -13,13 +13,24 @@ def split_document_into_chunks(text):
     []
     >>> split_document_into_chunks('This is a sentence.\n')
     ['This is a sentence.']
-    >>> split_document_into_chunks('This is a sentence.\n\n')
-    []
     >>> split_document_into_chunks('This is a sentence.\n\nThis is another paragraph.\n\n')
-    ['This is a sentence.', 'This is another paragraph.']''
+    ['This is a sentence.', 'This is another paragraph.']
+    >>> split_document_into_chunks('   This is a sentence.   \n\nThis is another paragraph.')
+    ['   This is a sentence.   ', 'This is another paragraph.']
+    >>> split_document_into_chunks('Sentence one.\nSentence two.')
+    ['Sentence one.\nSentence two.']
+
 
     '''
-    return text.split('\n\n')
+
+    if text == "":
+        return []
+    
+    if "\n" in text and "\n\n" not in text:
+        return [chunk.strip() for chunk in text.split("\n\n") if chunk.strip()]
+
+    return [chunk for chunk in text.split("\n\n") if chunk]
+
 
 
 if __name__ == '__main__':

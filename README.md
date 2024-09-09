@@ -1,4 +1,4 @@
-# docsum ![](https://github.com/EthanTu2/docsum/workflows/tests/badge.svg)
+# docsum ![](https://github.com/EthanTu2/docsum/workflows/tests/badge.svg?dummy=timestamp)
 
 Use an LLM to summarize a document on the command line.
 

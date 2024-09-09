@@ -67,20 +67,24 @@ if __name__ == '__main__':
         r'''
         Summarizes text passed to it
         '''
-        chat_completion = client.chat.completions.create(
-        messages=[
-            {
-                'role': 'system',
-                'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
-            },
-            {
-                "role": "user",
-                "content": text,
-            }
-        ],
-        model="llama3-8b-8192",
-        )
-        return chat_completion.choices[0].message.content
+        try:
+            chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    'role': 'system',
+                    'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
+                },
+                {
+                    "role": "user",
+                    "content": text,
+                }
+            ],
+            model="llama3-8b-8192",
+            )
+            return chat_completion.choices[0].message.content
+        except Exception as e:
+            print(f"Error summarizing text: {e}")
+            return ""
     
     smalldoc = ""
     for paragraph in split_document_into_chunks(text):

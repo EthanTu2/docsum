@@ -64,6 +64,7 @@ if __name__ == '__main__':
     '''
 
     import time
+    from groq import Groq
 
     def summarizer(text):
         r'''
@@ -76,7 +77,41 @@ if __name__ == '__main__':
                     messages=[
                         {
                             'role': 'system',
-                            'content': 'Summarize the input text below. Limit the summary to 1 paragraph and use a 1st grade reading level.',
+                            'content': 'Summarize the input text below. Limit the summary to 3 sentences and use a 1st grade reading level.',
+                        },
+                        {
+                            "role": "user",
+                            "content": text,
+                        }
+                    ],
+                    model="llama3-8b-8192",
+                )
+                return chat_completion.choices[0].message.content
+            except Exception as e:  # Catch all exceptions if specific ones are not defined
+                if attempt < retries - 1:
+                    wait_time = 2 ** attempt  # Exponential backoff
+                    print(f"Error occurred: {e}. Retrying in {wait_time} seconds...")
+                    time.sleep(wait_time)
+                else:
+                    print(f"Failed after {retries} attempts")
+                    raise e
+
+
+    """import time
+    from groq import Groq, GroqError
+
+    def summarizer(text):
+        r'''
+        Summarizes text passed to it
+        '''
+        retries = 5
+        for attempt in range(retries):
+            try:
+                chat_completion = client.chat.completions.create(
+                    messages=[
+                        {
+                            'role': 'system',
+                            'content': 'Summarize the input text below. Limit the summary to 3 sentences and use a 1st grade reading level.',
                         },
                         {
                             "role": "user",
@@ -93,8 +128,8 @@ if __name__ == '__main__':
                     time.sleep(wait_time)
                 else:
                     print(f"Failed after {retries} attempts")
-                    raise e
-
+                    raise e"""
+                    
     '''def summarizer(text):
         r"""
         Summarizes text passed to it

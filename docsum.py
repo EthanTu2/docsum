@@ -23,7 +23,7 @@ def split_document_into_chunks(text):
 
 
 if __name__ == '__main__':
-    import doctest
+    import doctest #added just in case (not in Mike's file)
     import os
     from groq import Groq
 

@@ -77,7 +77,7 @@ if __name__ == '__main__':
                     messages=[
                         {
                             'role': 'system',
-                            'content': 'Summarize the input text below. Limit the summary to 3 sentences and use a 1st grade reading level.',
+                            'content': 'Summarize the input text below. Limit the summary to 1 paragraph and use a 1st grade reading level.',
                         },
                         {
                             "role": "user",

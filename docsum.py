@@ -54,15 +54,6 @@ if __name__ == '__main__':
     with open(args.filename) as f:
         text = f.read()
 
-    '''
-    We need to call the split_document_into_chunks on text.
-    Then for each paragraph in the output list,
-    call the LLM code below to summarize it.
-    Put the summary into a new list.
-    Concatenate that new list into one smaller document.
-    Recall the LLM code below on the new smaller document.
-    '''
-
     import time
     from groq import Groq
 
@@ -96,64 +87,6 @@ if __name__ == '__main__':
                     print(f"Failed after {retries} attempts")
                     raise e
 
-
-    """import time
-    from groq import Groq, GroqError
-
-    def summarizer(text):
-        r'''
-        Summarizes text passed to it
-        '''
-        retries = 5
-        for attempt in range(retries):
-            try:
-                chat_completion = client.chat.completions.create(
-                    messages=[
-                        {
-                            'role': 'system',
-                            'content': 'Summarize the input text below. Limit the summary to 3 sentences and use a 1st grade reading level.',
-                        },
-                        {
-                            "role": "user",
-                            "content": text,
-                        }
-                    ],
-                    model="llama3-8b-8192",
-                )
-                return chat_completion.choices[0].message.content
-            except groq.RateLimitError as e:
-                if attempt < retries - 1:
-                    wait_time = 2 ** attempt  # Exponential backoff
-                    print(f"Rate limit exceeded. Retrying in {wait_time} seconds...")
-                    time.sleep(wait_time)
-                else:
-                    print(f"Failed after {retries} attempts")
-                    raise e"""
-                    
-    '''def summarizer(text):
-        r"""
-        Summarizes text passed to it
-        """
-        try:
-            chat_completion = client.chat.completions.create(
-            messages=[
-                {
-                    'role': 'system',
-                    'content': 'Summarize the input text below.  Limit the summary to 1 paragraph and use a 1st grade reading level.',
-                },
-                {
-                    "role": "user",
-                    "content": text,
-                }
-            ],
-            model="llama3-8b-8192",
-            )
-            return chat_completion.choices[0].message.content
-        except Exception as e:
-            print(f"Error summarizing text: {e}")
-            return ""
-            '''
-    
     smalldoc = ""
     for paragraph in split_document_into_chunks(text):
         sumpara = summarizer(paragraph)

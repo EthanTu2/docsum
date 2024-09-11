@@ -10,7 +10,7 @@ jobs:
   tests:
     strategy:
       matrix:
-        python: [3.8] #3.9 was also here, take out to reduce rate limit
+        python: [3.8] #3.9 was also here, take out to manage rate limit
     runs-on: ubuntu-latest
     env:
       GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
